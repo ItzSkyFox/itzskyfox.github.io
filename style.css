@@ -297,18 +297,18 @@ h1 {
   transition: color 0.3s ease;
 }
 
-h1::before {
-  content: attr(data-label);
+.h1-label {
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.56rem;
   font-style: italic;
   font-weight: 400;
   color: var(--text-comment);
   letter-spacing: 0.1em;
-  margin-block-end: 0.5rem;
+  margin-block-end: 0.45rem;
   transition: color 0.3s ease;
 }
+h1:hover .h1-label { color: rgba(48,209,88,0.45); }
 
 h1:hover { color: #fff; }
 h1:hover::before { color: var(--green-dim); }
@@ -332,10 +332,21 @@ h1:hover::before { color: var(--green-dim); }
 }
 
 .tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
   font-family: var(--font-mono);
   font-size: 0.64rem;
   color: var(--text-tag);
   letter-spacing: 0.06em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tag svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
 }
 
 .tag-sep {
@@ -513,7 +524,7 @@ p:last-child { margin-block-end: 0; }
     font-size: clamp(2rem, 9vw, 2.6rem);
     letter-spacing: -0.025em;
   }
-  h1::before { display: none; }
+  .h1-label { display: none; }
 
   h2 {
     font-size: 1rem;
