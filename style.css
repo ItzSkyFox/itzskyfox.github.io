@@ -1,3 +1,8 @@
+body {
+  background: radial-gradient(at top left, #1a1a1a, transparent), radial-gradient(at bottom right, #00ff8822, transparent), #050505;
+  height: 100vh;
+}
+
 h1{
     font-size: 20px;
     color: red;
