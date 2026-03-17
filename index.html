@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#090c0a">
+  <meta name="theme-color" content="#07090a">
   <title>ItzSkyFox</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,62 +11,78 @@
 </head>
 <body>
 
-  <!-- Cursor glow — desktop only, auto-hidden on touch via CSS -->
-  <div id="cursor-glow" aria-hidden="true"></div>
-
-  <!-- Circuit board background — drawn by app.js -->
+  <!-- PCB background -->
   <svg id="bg-svg" aria-hidden="true" focusable="false"></svg>
 
-  <!-- ╔════════════════════════════════════════════════════════╗ -->
-  <!-- ║               DYNAMIC ISLAND                          ║ -->
-  <!-- ║  Edit these data-* attributes to update your info:    ║ -->
-  <!-- ║    data-name       → your display name                ║ -->
-  <!-- ║    data-yt-handle  → your @handle shown on expand     ║ -->
-  <!-- ║    data-yt-url     → full YouTube channel URL         ║ -->
-  <!-- ╚════════════════════════════════════════════════════════╝ -->
+  <!-- Cursor trail (desktop only) -->
+  <canvas id="trail-canvas" aria-hidden="true"></canvas>
+
+  <!-- ═══════════════════════════════════════════════════════
+       DYNAMIC ISLAND
+       To update your info → edit only the data-* attributes:
+         data-name       = display name in island
+         data-yt-handle  = @handle shown when expanded
+         data-yt-url     = your full YouTube URL
+  ════════════════════════════════════════════════════════ -->
   <div class="island"
        data-name="ItzSkyFox"
        data-yt-handle="@ItzSkyFox"
        data-yt-url="https://youtube.com/@ItzSkyFox"
        role="banner"
        tabindex="0"
-       aria-label="ItzSkyFox — YouTube">
+       aria-label="ItzSkyFox — YouTube channel">
 
-    <span class="island-dot"  aria-hidden="true"></span>
-    <span class="island-name"></span><!-- filled by JS -->
-    <span class="island-sep"  aria-hidden="true"></span>
+    <!-- YouTube icon — always visible -->
+    <svg class="island-yt-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3
+        3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1
+        2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24
+        12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+    </svg>
 
-    <a class="island-yt" href="#" target="_blank" rel="noopener noreferrer">
-      <!-- YouTube icon -->
-      <svg class="island-yt-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12
-          3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0
-          12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5
-          9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0
-          24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+    <!-- Name — always visible -->
+    <span class="island-name"></span>
+
+    <!-- Separator + handle — visible on expand -->
+    <span class="island-sep" aria-hidden="true"></span>
+    <a class="island-yt-link" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="island-yt-handle"></span>
+      <svg width="9" height="9" viewBox="0 0 10 10" fill="currentColor" aria-hidden="true" style="opacity:0.6">
+        <path d="M1 9L9 1M9 1H3M9 1V7"/>
       </svg>
-      <span class="island-yt-handle"></span><!-- filled by JS -->
     </a>
   </div>
 
-  <!-- ╔════════════════════════════════════════════════════════╗ -->
-  <!-- ║                   MAIN CONTENT                        ║ -->
-  <!-- ║  Add data-animate to any element for scroll reveal    ║ -->
-  <!-- ╚════════════════════════════════════════════════════════╝ -->
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT
+       Add data-animate to any element for scroll reveal.
+       Edit data-label on h1 to change the comment above it.
+  ════════════════════════════════════════════════════════ -->
   <main>
     <div class="site-border">
 
-      <h1 data-animate>Hello, I'm ItzSkyFox</h1>
-      <p  data-animate>yes</p>
+      <h1 data-animate data-label="// index.main">ItzSkyFox</h1>
+      <p  data-animate>
+        Builder. Tinkerer. Creator. I make things that work —
+        and occasionally things that shouldn't.
+      </p>
 
-      <h2 data-animate>What I'm building</h2>
-      <p  data-animate>Rizzler</p>
+      <h2 data-animate><span class="h2-accent">01 /</span> What I do</h2>
+      <p  data-animate>
+        A bit of everything, honestly. Software, hardware, content —
+        whatever problem is in front of me.
+      </p>
 
-      <h2 data-animate>Content</h2>
-      <p  data-animate>Videos on YouTube at @ItzSkyFox — tech, nature, whatever's interesting. No algorithm chasing, just genuine stuff.</p>
+      <h2 data-animate><span class="h2-accent">02 /</span> Content</h2>
+      <p  data-animate>
+        I put things on the internet sometimes. Find me on YouTube
+        if you're curious.
+      </p>
 
-      <h2 data-animate>fahhhhk</h2>
-      <p  data-animate>lol.</p>
+      <h2 data-animate><span class="h2-accent">03 /</span> This site</h2>
+      <p  data-animate>
+        Always under construction. That's kind of the point.
+      </p>
 
     </div>
   </main>
