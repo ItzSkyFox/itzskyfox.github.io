@@ -550,5 +550,5 @@ p:last-child { margin-block-end: 0; }
 
 /* missing rules added */
 #glow-layer{}
-#bg-canvas{}
+#bg-svg{}
 @keyframes shimmer{0%,100%{opacity:0.35;}50%{opacity:0.8;}}
