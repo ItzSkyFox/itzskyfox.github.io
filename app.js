@@ -11,6 +11,7 @@
 
   island.querySelector('.island-name').textContent   = island.dataset.name     || 'ItzSkyFox';
   island.querySelector('.island-handle').textContent = island.dataset.ytHandle || '@ItzSkyFox';
+  island.querySelector('.island-yt').href             = island.dataset.ytUrl    || 'https://youtube.com/@ItzSkyFox';
 
   // Make the whole island clickable as a YT link on desktop when expanded
   // and tap-togglable on mobile
@@ -527,7 +528,7 @@
    5. CLICK RIPPLE
 ═══════════════════════════════════════════════════════════ */
 (function initRipple() {
-  document.querySelectorAll('h1, h2, p, .hero-tags').forEach(el => {
+  document.querySelectorAll('h1, h2, p').forEach(el => {
     el.style.position = 'relative';
     el.style.overflow = 'hidden';
 
