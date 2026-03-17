@@ -1,132 +1,554 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#060809">
-  <title>ItzSkyFox</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+/* ================================================================
+   style.css — ItzSkyFox · Refined green · Apple-smooth
+   Space Grotesk · JetBrains Mono · Instrument Serif
+   ================================================================ */
 
-  <!-- Fixed layers (z-index 0→3) -->
-  <canvas id="bg-canvas"  aria-hidden="true"></canvas>
-  <div    id="glow-layer" aria-hidden="true"></div>
-  <div    id="vignette"   aria-hidden="true"></div>
-  <canvas id="trail-canvas" aria-hidden="true"></canvas>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap');
 
-  <!--
-    DYNAMIC ISLAND
-    Edit only the three data-* attributes to update your info.
-    data-name       = display name shown always
-    data-yt-handle  = @handle revealed on hover
-    data-yt-url     = full YouTube URL (opens on icon click)
-  -->
-  <div class="island"
-       data-name="ItzSkyFox"
-       data-yt-handle="@ItzSkyFox"
-       data-yt-url="https://youtube.com/@ItzSkyFox"
-       role="banner" tabindex="0" aria-label="ItzSkyFox">
+/* ── Tokens ─────────────────────────────────────────────────── */
+:root {
+  --bg:             #06080a;
+  --green:          #30d158;
+  --green-dim:      #1c7a38;
+  --green-faint:    rgba(48,209,88,0.07);
+  --green-border:   rgba(48,209,88,0.16);
+  --green-border-hi:rgba(48,209,88,0.38);
+  --teal:           #32ade6;
 
-    <!-- LEFT: name, always visible -->
-    <span class="island-name"></span>
+  --text-primary:   #edf2ee;
+  --text-secondary: #768c7e;
+  --text-lead:      #b4ccbc;
+  --text-comment:   #253320;
+  --text-tag:       rgba(48,209,88,0.55);
 
-    <!-- MIDDLE: handle, fades in from right on hover -->
-    <span class="island-handle" aria-hidden="true"></span>
+  --font-sans:  'Space Grotesk', sans-serif;
+  --font-mono:  'JetBrains Mono', monospace;
+  --font-serif: 'Instrument Serif', Georgia, serif;
 
-    <!-- RIGHT: YouTube icon, always visible, clickable -->
-    <a class="island-yt" href="#" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
-      <svg class="island-yt-icon" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6
-          s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12
-          a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5
-          s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12
-          a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
-      </svg>
-    </a>
-  </div>
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-apple:  cubic-bezier(0.25, 0.1, 0.25, 1);
+}
 
-  <!--
-    MAIN CONTENT
-    data-animate = scroll fade-in reveal.
-    Click any h1/h2/p to see the ripple.
-  -->
-  <main>
-    <div class="site-border">
+/* ── Reset ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
-      <h1 data-animate>
-        <span class="h1-label">// index.main</span>
-        ItzSkyFox
-      </h1>
+/* ── Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 3px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: #162018; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--green); }
 
-      <p data-animate>
-        Builder by instinct, tinkerer by habit. I work somewhere between
-        <span class="tag">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-            <polyline points="2,4 5,6 2,8"/><line x1="6" y1="8" x2="10" y2="8"/>
-          </svg>
-          software
-        </span>
-        and
-        <span class="tag">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
-            <rect x="3" y="3" width="6" height="6" rx="1"/>
-            <line x1="5" y1="1" x2="5" y2="3"/><line x1="7" y1="1" x2="7" y2="3"/>
-            <line x1="5" y1="9" x2="5" y2="11"/><line x1="7" y1="9" x2="7" y2="11"/>
-            <line x1="1" y1="5" x2="3" y2="5"/><line x1="1" y1="7" x2="3" y2="7"/>
-            <line x1="9" y1="5" x2="11" y2="5"/><line x1="9" y1="7" x2="11" y2="7"/>
-          </svg>
-          hardware
-        </span>
-        — building things that actually work.
-      </p>
+/* ── Background orbs ─────────────────────────────────────────── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 55% 42% at 16% 20%, rgba(48,209,88,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 44% 36% at 84% 74%, rgba(50,173,230,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 46% 30% at 58% 4%,  rgba(48,209,88,0.05) 0%, transparent 68%),
+    radial-gradient(ellipse 34% 46% at 6%  88%, rgba(48,209,88,0.06) 0%, transparent 68%);
+  filter: blur(65px);
+  animation: orbitDrift 28s ease-in-out infinite alternate;
+  will-change: transform, opacity;
+}
 
-      <h2 data-animate><span class="h2-num">01 /</span> What I do</h2>
-      <p data-animate>
-        A mix of creating, making, and figuring things out. Projects range from
-        things you can see on a screen to things you can hold in your hand —
-        sometimes both at once. The line between
-        <span class="tag">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-            <polyline points="1,9 4,5 7,7 11,3"/>
-          </svg>
-          work
-        </span>
-        and hobby is blurry around here, which is probably a good sign.
-      </p>
+@keyframes orbitDrift {
+  0%   { transform: translate(0,0);         opacity: 1;    }
+  35%  { transform: translate(2.5%,-3.5%);  opacity: 0.75; }
+  70%  { transform: translate(-2.2%,2.5%);  opacity: 0.93; }
+  100% { transform: translate(1.5%,-2%);    opacity: 1;    }
+}
 
-      <h2 data-animate><span class="h2-num">02 /</span> Online</h2>
-      <p data-animate>
-        I put things on the internet when they're worth sharing. Mostly
-        <span class="tag">
-          <svg viewBox="0 0 12 12" fill="currentColor">
-            <path d="M3 2.5l7 3.5-7 3.5z"/>
-          </svg>
-          video
-        </span>
-        content — tech, experiments, whatever ends up interesting.
-        No particular niche. Just things I'd want to watch myself.
-        Find me on YouTube if you're curious.
-      </p>
+/* ── PCB svg ─────────────────────────────────────────────────── */
+#bg-svg {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 0; pointer-events: none;
+}
 
-      <h2 data-animate><span class="h2-num">03 /</span> This site</h2>
-      <p data-animate>
-        A small corner of the internet that's mine to do whatever with.
-        Always being updated, never quite finished — that's kind of the point.
-        It grows when I do.
-        <span class="tag">
-          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M6 1v2M6 9v2M1 6h2M9 6h2M2.5 2.5l1.5 1.5M8 8l1.5 1.5M9.5 2.5L8 4M4 8l-1.5 1.5"/>
-          </svg>
-          always wip
-        </span>
-      </p>
+/* ── Cool vignette ───────────────────────────────────────────── */
+#vignette {
+  position: fixed; inset: 0;
+  z-index: 2; pointer-events: none;
 
-    </div>
-  </main>
+  /* Layered: dark corner vignette + green top bloom + scanline hint */
+  background:
+    radial-gradient(ellipse 100% 100% at 50% 50%,
+      transparent 30%,
+      rgba(4,7,5,0.35) 60%,
+      rgba(3,5,4,0.72) 100%),
+    linear-gradient(to bottom,
+      rgba(48,209,88,0.025) 0%,
+      transparent 18%,
+      transparent 82%,
+      rgba(0,4,2,0.15) 100%),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.012) 2px,
+      rgba(0,0,0,0.012) 4px
+    );
 
-  <script src="app.js"></script>
-</body>
-</html>
+  mix-blend-mode: normal;
+}
+
+/* ── Cursor trail canvas ─────────────────────────────────────── */
+#trail-canvas {
+  position: fixed; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 3; pointer-events: none;
+}
+
+/* ── Body ────────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--text-secondary);
+  background: var(--bg);
+  min-height: 100dvh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body > * { position: relative; z-index: 1; }
+
+/* ── Layout ──────────────────────────────────────────────────── */
+main {
+  padding: 86px clamp(0.9rem, 3.5vw, 2rem) clamp(2.5rem, 5vh, 4rem);
+}
+
+/* ── Site border ─────────────────────────────────────────────── */
+.site-border {
+  max-width: 700px;
+  margin-inline: auto;
+  border: 1px dashed var(--green-border);
+  border-radius: 20px;
+  padding: clamp(1.6rem, 3.5vw, 2.6rem) clamp(1.1rem, 3vw, 2rem);
+  position: relative;
+
+  /* Frosted glass over PCB */
+  background: rgba(6,8,10,0.28);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+
+  animation: borderBreathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes borderBreathe {
+  from { border-color: rgba(48,209,88,0.12); box-shadow: 0 0 22px rgba(48,209,88,0.03); }
+  to   { border-color: rgba(48,209,88,0.36); box-shadow: 0 0 44px rgba(48,209,88,0.09), inset 0 0 36px rgba(48,209,88,0.02); }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DYNAMIC ISLAND
+═══════════════════════════════════════════════════════════════ */
+.island {
+  position: fixed;
+  top: 15px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+
+  /* Frosted glass pill */
+  background: rgba(7,11,9,0.82);
+  backdrop-filter: blur(32px) saturate(2.2) brightness(0.92);
+  -webkit-backdrop-filter: blur(32px) saturate(2.2) brightness(0.92);
+
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.07);
+  padding: 9px 13px 9px 15px;
+  width: 190px;
+
+  box-shadow:
+    0 4px 30px rgba(0,0,0,0.65),
+    0 1px 0 rgba(255,255,255,0.07) inset,
+    0 -1px 0 rgba(0,0,0,0.5) inset;
+
+  cursor: default;
+  overflow: hidden;
+
+  transition:
+    width        0.48s var(--ease-out),
+    border-color 0.38s ease,
+    box-shadow   0.38s ease;
+}
+
+.island:hover, .island.expanded {
+  width: 300px;
+  border-color: rgba(48,209,88,0.20);
+  box-shadow:
+    0 6px 38px rgba(0,0,0,0.70),
+    0 1px 0 rgba(255,255,255,0.08) inset,
+    0 0 0 1px rgba(48,209,88,0.07);
+}
+
+/* Subtle top accent line */
+.island::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20px; right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(48,209,88,0.5), transparent);
+  animation: accentPulse 3.8s ease-in-out infinite;
+}
+
+@keyframes accentPulse {
+  0%,100% { opacity: 0.35; }
+  50%      { opacity: 0.85; }
+}
+
+/* Name — left side, transitions to bold */
+.island-name {
+  font-family: var(--font-sans);
+  font-size: 0.80rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: font-weight 0.2s ease;
+}
+
+.island:hover .island-name,
+.island.expanded .island-name {
+  font-weight: 700;
+}
+
+/* Right group: handle + icon */
+.island-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+/* Handle — slides in from right (expands leftward from icon) */
+.island-handle {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(178, 210, 188, 0.45);
+  white-space: nowrap;
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    max-width 0.46s var(--ease-out) 0.04s,
+    opacity   0.28s ease 0.12s;
+}
+
+.island:hover .island-handle,
+.island.expanded .island-handle {
+  max-width: 130px;
+  opacity: 1;
+}
+
+/* YT icon — always visible, goes red on hover */
+.island-yt-icon {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.55);
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+.island:hover .island-yt-icon,
+.island.expanded .island-yt-icon {
+  color: #ff3b30;
+  transform: scale(1.08);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HERO BLOCK
+═══════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  margin-block-end: 2.8rem;
+  padding: 0.2rem 0 1.2rem;
+}
+
+/* Subtle corner marks */
+.corner {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-color: rgba(48,209,88,0.3);
+  border-style: solid;
+  opacity: 0.6;
+}
+.corner.tl { top: 0;  left: 0;  border-width: 1px 0 0 1px; }
+.corner.tr { top: 0;  right: 0; border-width: 1px 1px 0 0; }
+
+/* ── H1 ─────────────────────────────────────────────────────── */
+h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.6rem, 7vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--text-primary);
+  margin-block-end: 1rem;
+  cursor: default;
+  transition: color 0.3s ease;
+}
+
+.h1-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--text-comment);
+  letter-spacing: 0.1em;
+  margin-block-end: 0.45rem;
+  transition: color 0.3s ease;
+}
+h1:hover .h1-label { color: rgba(48,209,88,0.45); }
+
+h1:hover { color: #fff; }
+h1:hover::before { color: var(--green-dim); }
+
+/* Lead paragraph */
+.lead {
+  font-size: clamp(1rem, 2.2vw, 1.06rem);
+  line-height: 1.82;
+  color: var(--text-lead);
+  font-weight: 400;
+  max-width: 54ch;
+  margin-block-end: 1.2rem;
+}
+
+/* Hero tags row */
+.hero-tags {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--text-tag);
+  letter-spacing: 0.06em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.tag svg {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+}
+
+.tag-sep {
+  color: var(--text-comment);
+  font-size: 0.7rem;
+}
+
+/* ── H2 ─────────────────────────────────────────────────────── */
+section { margin-block-end: 0.4rem; }
+
+h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+  margin-block: 2.6rem 0.65rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  cursor: default;
+  transition: color 0.28s ease;
+}
+
+h2:hover { color: var(--green); }
+
+/* Section number — mono accent */
+.h2-num {
+  font-family: var(--font-mono);
+  font-size: 0.60rem;
+  font-weight: 400;
+  color: var(--green);
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+  flex-shrink: 0;
+  animation: accentPulse 3s ease-in-out infinite;
+}
+
+/* Icon */
+.h2-icon {
+  width: 17px; height: 17px;
+  color: var(--green);
+  flex-shrink: 0;
+  opacity: 0.65;
+  transition: opacity 0.25s ease;
+}
+
+h2:hover .h2-icon { opacity: 1; }
+
+/* Rule after h2 */
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--green-border), transparent);
+  min-width: 20px;
+}
+
+/* ── Paragraphs ──────────────────────────────────────────────── */
+p {
+  font-size: 1em;
+  line-height: 1.84;
+  color: var(--text-secondary);
+  margin-block-end: 1rem;
+  max-width: 60ch;
+}
+
+p:last-child { margin-block-end: 0; }
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.site-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-block-start: 2.8rem;
+  opacity: 0.35;
+}
+
+.footer-line {
+  flex: 1;
+  height: 1px;
+  background: var(--green-border);
+}
+
+.footer-label {
+  font-family: var(--font-mono);
+  font-size: 0.60rem;
+  color: var(--green);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+
+/* ── Scroll reveal ───────────────────────────────────────────── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(13px);
+  transition:
+    opacity   0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
+}
+
+[data-animate].visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── Ripple ──────────────────────────────────────────────────── */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(48,209,88,0.15);
+  transform: scale(0);
+  animation: rippleOut 0.7s var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleOut {
+  to { transform: scale(5); opacity: 0; }
+}
+
+/* ── Selection / focus ───────────────────────────────────────── */
+::selection { background: rgba(48,209,88,0.2); color: #fff; }
+:focus-visible { outline: 1.5px solid var(--green); outline-offset: 4px; border-radius: 5px; }
+
+/* ── Reduced motion ──────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  [data-animate] { opacity: 1; transform: none; }
+  #trail-canvas  { display: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DESKTOP ≥ 769px
+═══════════════════════════════════════════════════════════════ */
+@media (min-width: 769px) {
+  main { padding-top: 96px; padding-inline: clamp(1.4rem, 4.5vw, 2.6rem); }
+  .site-border { padding: 2.4rem 2.2rem; }
+  h1 { font-size: clamp(3rem, 5.5vw, 4.2rem); }
+  h2 { font-size: clamp(1.1rem, 2.4vw, 1.25rem); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE ≤ 768px
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Lighter bg animations for perf */
+  body::before { filter: blur(45px); opacity: 0.68; animation-duration: 34s; }
+  #bg-svg      { opacity: 0.30; }
+  #trail-canvas { display: none !important; }
+
+  main {
+    padding: 70px 0.8rem 2.5rem;
+  }
+
+  .site-border {
+    border-radius: 14px;
+    padding: 1.2rem 1rem;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(6,8,10,0.15);
+  }
+
+  .island {
+    top: 11px;
+    width: 175px;
+    border-radius: 12px;
+    padding: 8px 11px 8px 13px;
+  }
+  .island:hover { width: 175px; } /* no hover on touch */
+  .island.expanded { width: 285px; }
+
+  h1 {
+    font-size: clamp(2rem, 9vw, 2.6rem);
+    letter-spacing: -0.025em;
+  }
+  .h1-label { display: none; }
+
+  h2 {
+    font-size: 1rem;
+    margin-block-start: 2rem;
+  }
+
+  p { font-size: 0.95rem; line-height: 1.78; }
+
+  .lead { font-size: 0.98rem; }
+
+  .hero-tags { gap: 0.4rem; }
+
+  .corner { display: none; }
+}
+
+/* Safe area */
+@supports (padding: env(safe-area-inset-top)) {
+  @media (max-width: 768px) {
+    .island { top: calc(env(safe-area-inset-top) + 8px); }
+    main    { padding-bottom: calc(env(safe-area-inset-bottom) + 2.5rem); }
+  }
+}
+
+/* missing rules added */
+#glow-layer{}
+#bg-canvas{}
+@keyframes shimmer{0%,100%{opacity:0.35;}50%{opacity:0.8;}}
