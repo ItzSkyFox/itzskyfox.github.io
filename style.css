@@ -1,25 +1,26 @@
 /* ============================================================
-   style.css — VOX × Code Edition
-   Space Grotesk · JetBrains Mono · abstract glow bg
+   style.css — VOX × Code · Green Edition
+   Space Grotesk · JetBrains Mono · dashed border · green glow
    ============================================================ */
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* ---------- Tokens ---------- */
 :root {
-  --bg:          #0a0c0f;
-  --surface:     #0f1318;
+  --bg:           #090c0a;
 
-  /* Syntax-glow palette */
-  --glow-green:  #4af08a;
-  --glow-purple: #a78bfa;
-  --glow-blue:   #38bdf8;
-  --glow-amber:  #fbbf24;
+  --glow-primary: #4af08a;
+  --glow-mid:     #2dd36f;
+  --glow-dim:     #1a7a45;
+  --glow-teal:    #34d399;
+  --glow-lime:    #a3e635;
 
-  --text-h1:     #f0ece4;
-  --text-h2:     #a78bfa;
-  --text-body:   #8b949e;
-  --text-lead:   #c9d1d9;
+  --text-h1:      #e8f5ee;
+  --text-h2:      #4af08a;
+  --text-body:    #7a9e87;
+  --text-lead:    #b8d4c0;
+
+  --border-dash:  rgba(74, 240, 138, 0.35);
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
@@ -31,8 +32,8 @@
 /* ---------- Scrollbar ---------- */
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #1e2530; border-radius: 99px; }
-::-webkit-scrollbar-thumb:hover { background: var(--glow-purple); }
+::-webkit-scrollbar-thumb { background: #1a2e20; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--glow-primary); }
 
 /* ---------- Abstract Glow Background ---------- */
 body::before {
@@ -42,38 +43,22 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 50% 40% at 20% 20%, rgba(74, 240, 138, 0.07) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 35% at 80% 75%, rgba(167, 139, 250, 0.09) 0%, transparent 70%),
-    radial-gradient(ellipse 55% 45% at 60% 10%, rgba(56, 189, 248, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 50% at 10% 80%, rgba(251, 191, 36, 0.05) 0%, transparent 70%);
-  animation: glowShift 18s ease-in-out infinite alternate;
-  filter: blur(40px);
+    radial-gradient(ellipse 55% 45% at 15% 20%,  rgba(74, 240, 138, 0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 85% 70%,  rgba(52, 211, 153, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 55% 5%,   rgba(163, 230, 53,  0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 10% 85%,  rgba(45, 211, 111,  0.07) 0%, transparent 70%);
+  filter: blur(48px);
+  animation: glowDrift 20s ease-in-out infinite alternate;
 }
 
-@keyframes glowShift {
-  0%   {
-    background-position: 20% 20%, 80% 75%, 60% 10%, 10% 80%;
-    opacity: 1;
-  }
-  25%  {
-    background-position: 35% 10%, 65% 85%, 75% 25%, 20% 65%;
-    opacity: 0.85;
-  }
-  50%  {
-    background-position: 15% 40%, 85% 55%, 50% 5%,  5%  90%;
-    opacity: 1;
-  }
-  75%  {
-    background-position: 40% 30%, 60% 70%, 80% 15%, 25% 75%;
-    opacity: 0.9;
-  }
-  100% {
-    background-position: 25% 15%, 75% 80%, 55% 30%, 15% 60%;
-    opacity: 1;
-  }
+@keyframes glowDrift {
+  0%   { transform: translate(0%,   0%);   opacity: 1;    }
+  33%  { transform: translate(2%,  -3%);   opacity: 0.8;  }
+  66%  { transform: translate(-3%,  2%);   opacity: 0.95; }
+  100% { transform: translate(1.5%, -1.5%); opacity: 1;   }
 }
 
-/* Scanline grid overlay — code editor feel */
+/* Scanline grid overlay */
 body::after {
   content: '';
   position: fixed;
@@ -81,15 +66,15 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-  background-size: 48px 48px;
-  animation: gridPulse 8s ease-in-out infinite;
+    linear-gradient(rgba(74,240,138,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74,240,138,0.018) 1px, transparent 1px);
+  background-size: 44px 44px;
+  animation: gridPulse 10s ease-in-out infinite;
 }
 
 @keyframes gridPulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50%       { opacity: 0.35; }
 }
 
 /* ---------- Body ---------- */
@@ -102,7 +87,8 @@ body {
   min-height: 100dvh;
   position: relative;
 
-  padding: clamp(1.8rem, 5vw, 3rem) clamp(1.2rem, 5vw, 2.8rem);
+  /* Tighter horizontal padding */
+  padding: clamp(1.6rem, 4vw, 2.4rem) clamp(0.9rem, 3vw, 1.6rem);
   max-width: 800px;
   margin-inline: auto;
 
@@ -116,19 +102,55 @@ body > * { position: relative; z-index: 1; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- H1 — Bold VOX Editorial ---------- */
+/* ---------- Dashed Border Wrapper ----------
+   We use a wrapper div with class .site-border in the HTML,
+   OR you can target body directly if it's a single-page layout.
+   Using a pseudo on a wrapper keeps it clean.
+   ------------------------------------------ */
+.site-border {
+  position: relative;
+  border: 1.5px dashed var(--border-dash);
+  border-radius: 16px;
+  padding: clamp(1.2rem, 3vw, 2rem) clamp(0.9rem, 2.5vw, 1.6rem);
+
+  /* Glow on the border itself */
+  box-shadow:
+    0 0 0 1px rgba(74, 240, 138, 0.04),
+    0 0 24px rgba(74, 240, 138, 0.06),
+    inset 0 0 32px rgba(74, 240, 138, 0.025);
+
+  animation: borderGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes borderGlow {
+  from {
+    box-shadow:
+      0 0 0 1px rgba(74, 240, 138, 0.04),
+      0 0 24px rgba(74, 240, 138, 0.06),
+      inset 0 0 32px rgba(74, 240, 138, 0.025);
+    border-color: rgba(74, 240, 138, 0.30);
+  }
+  to {
+    box-shadow:
+      0 0 0 1px rgba(74, 240, 138, 0.06),
+      0 0 40px rgba(74, 240, 138, 0.12),
+      inset 0 0 48px rgba(74, 240, 138, 0.04);
+    border-color: rgba(74, 240, 138, 0.55);
+  }
+}
+
+/* ---------- H1 ---------- */
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 8vw, 4.5rem);
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
   font-weight: 700;
   line-height: 1.0;
   letter-spacing: -0.03em;
   color: var(--text-h1);
-  margin-block-end: 1rem;
+  margin-block-end: 0.9rem;
 
-  /* Live text glow */
   text-shadow:
-    0 0 40px rgba(74, 240, 138, 0.18),
+    0 0 40px rgba(74, 240, 138, 0.20),
     0 0 80px rgba(74, 240, 138, 0.08);
 
   animation: h1Glow 5s ease-in-out infinite alternate;
@@ -137,70 +159,66 @@ h1 {
 @keyframes h1Glow {
   from {
     text-shadow:
-      0 0 40px rgba(74, 240, 138, 0.18),
+      0 0 40px rgba(74, 240, 138, 0.20),
       0 0 80px rgba(74, 240, 138, 0.08);
   }
   to {
     text-shadow:
-      0 0 60px rgba(74, 240, 138, 0.30),
-      0 0 120px rgba(56, 189, 248, 0.12);
+      0 0 60px rgba(74, 240, 138, 0.38),
+      0 0 120px rgba(52, 211, 153, 0.14);
   }
 }
 
-/* Mono tag above the title — like a file path */
 h1::before {
   content: '// index.main';
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 400;
   font-style: italic;
-  color: #3d4d5c;
+  color: var(--glow-dim);
   letter-spacing: 0.08em;
-  margin-block-end: 0.5rem;
+  margin-block-end: 0.45rem;
 }
 
-/* ---------- H2 — Section keyword ---------- */
+/* ---------- H2 ---------- */
 h2 {
   font-family: var(--font-mono);
-  font-size: clamp(0.75rem, 2vw, 0.85rem);
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--glow-purple);
-  margin-block: 2.4rem 0.6rem;
+  color: var(--glow-primary);
+  margin-block: 2.2rem 0.55rem;
 
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.6rem;
 
-  /* Subtle purple glow on h2 */
-  text-shadow: 0 0 20px rgba(167, 139, 250, 0.4);
+  text-shadow: 0 0 18px rgba(74, 240, 138, 0.45);
 }
 
-/* Glowing dot before h2 */
 h2::before {
   content: '';
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--glow-purple);
-  box-shadow: 0 0 8px 2px rgba(167, 139, 250, 0.6);
+  background: var(--glow-primary);
+  box-shadow: 0 0 8px 2px rgba(74, 240, 138, 0.65);
   flex-shrink: 0;
   animation: dotPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(167, 139, 250, 0.6); }
-  50%       { box-shadow: 0 0 14px 4px rgba(167, 139, 250, 0.9); }
+  0%, 100% { box-shadow: 0 0 8px 2px rgba(74, 240, 138, 0.65); }
+  50%       { box-shadow: 0 0 16px 5px rgba(74, 240, 138, 0.95); }
 }
 
-/* Line after h2 text */
 h2::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(167,139,250,0.2), transparent);
+  background: linear-gradient(90deg, rgba(74,240,138,0.25), transparent);
 }
 
 /* ---------- Paragraphs ---------- */
@@ -216,41 +234,39 @@ p {
 
 p:last-child { margin-block-end: 0; }
 
-/* Lead paragraph — brighter */
 h1 + p {
   color: var(--text-lead);
-  font-size: 1.08em;
+  font-size: 1.07em;
   font-weight: 500;
 }
 
 /* ---------- Selection ---------- */
 ::selection {
-  background: rgba(167, 139, 250, 0.25);
-  color: #f0ece4;
+  background: rgba(74, 240, 138, 0.22);
+  color: #e8f5ee;
 }
 
 /* ---------- Focus ---------- */
 :focus-visible {
-  outline: 1.5px solid var(--glow-purple);
+  outline: 1.5px solid var(--glow-primary);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
 /* ---------- Reduced Motion ---------- */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation: none !important;
-  }
+  *, *::before, *::after { animation: none !important; }
 }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 480px) {
-  h1 { font-size: 2.2rem; letter-spacing: -0.02em; }
+  h1 { font-size: 2rem; letter-spacing: -0.02em; }
   h1::before { display: none; }
-  h2 { font-size: 0.72rem; }
+  h2 { font-size: 0.70rem; }
+  .site-border { border-radius: 12px; }
 }
 
 /* ---------- Tablet+ ---------- */
 @media (min-width: 768px) {
-  body { padding: 3.5rem clamp(2rem, 6vw, 3rem); }
+  body { padding: 2.5rem 1.6rem; }
 }
