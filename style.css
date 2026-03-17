@@ -1,21 +1,270 @@
-body {
-  background: #0a0a0a;
-  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
-  background-size: 40px 40px;
-  padding: 10px;      
+/* ============================================================
+   style.css — Mac Tahoe × Linux Edition
+   A glassy, warm-dark stylesheet for body / h1 / h2 / p
+   ============================================================ */
+
+/* ---------- Google Fonts ---------- */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Fraunces:opsz,wght@9..144,300;400;600&family=DM+Sans:ital,opsz,wght@0,9..40,300;400;500&display=swap');
+
+/* ---------- Design Tokens ---------- */
+:root {
+  /* Core palette — Gruvbox warmth + Tahoe frost */
+  --bg-deep:        #1a1710;      /* deep bark, almost black */
+  --bg-surface:     #211e14;      /* slightly lighter layer */
+  --bg-glass:       rgba(40, 36, 22, 0.55);
+  --bg-glass-hover: rgba(50, 46, 28, 0.70);
+
+  --accent-green:   #8fbc6a;      /* forest green, softened */
+  --accent-amber:   #d4a85a;      /* warm amber */
+  --accent-teal:    #5fb3a1;      /* hint of terminal cyan */
+
+  --text-primary:   #ede8d5;      /* warm off-white */
+  --text-secondary: #a89e80;      /* muted bark beige */
+  --text-dim:       #6b614a;      /* very dim */
+
+  --border-glass:   rgba(255, 240, 200, 0.08);
+  --shadow-glass:   0 8px 32px rgba(0, 0, 0, 0.55),
+                    0 1px 0 rgba(255, 240, 180, 0.06) inset;
+
+  /* Typography */
+  --font-display:   'Fraunces', Georgia, serif;     /* headlines — organic, literary */
+  --font-mono:      'JetBrains Mono', monospace;    /* Linux accent */
+  --font-body:      'DM Sans', sans-serif;          /* clean readable body */
+
+  /* Spacing */
+  --space-xs:  0.4rem;
+  --space-sm:  0.8rem;
+  --space-md:  1.5rem;
+  --space-lg:  2.8rem;
+  --space-xl:  4.5rem;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  /* Transitions */
+  --ease-glass: cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-h1{
-    font-size: 20px;
-    color: green;
-    background-color: black;
-    text-align: left;
-    padding: 10px;
-    margin: 10px;
-    border: 1px solid black;
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    text-transform: uppercase;
-    font-weight: bold;
-    font-family: Arial, Helvetica, sans-serif;
+/* ---------- Reset & Box Model ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ---------- Scrollbar (Webkit) ---------- */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb  {
+  background: var(--bg-glass-hover);
+  border-radius: 99px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent-amber); }
+
+/* ---------- Body ---------- */
+body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2.2vw, 1.125rem);
+  line-height: 1.75;
+  color: var(--text-primary);
+  background-color: var(--bg-deep);
+
+  /* Noise texture — that Linux grit */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),
+    radial-gradient(ellipse 70% 55% at 15% 10%,  rgba(143, 188, 106, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 85% 90%,  rgba(212, 168, 90,  0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 110%, rgba(95,  179, 161, 0.05) 0%, transparent 60%);
+
+  min-height: 100dvh;
+  padding: var(--space-lg) clamp(var(--space-md), 5vw, var(--space-xl));
+  max-width: 860px;
+  margin-inline: auto;
+
+  /* Fade-in on load */
+  animation: bodyFadeIn 0.6s var(--ease-glass) both;
+}
+
+@keyframes bodyFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- H1 — Hero / Display ---------- */
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-block-end: var(--space-md);
+
+  /* Glass panel look — Mac Tahoe */
+  background: var(--bg-glass);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md) var(--space-lg);
+  box-shadow: var(--shadow-glass);
+
+  /* Accent underline via gradient */
+  position: relative;
+  overflow: hidden;
+
+  animation: slideUp 0.7s var(--ease-glass) 0.1s both;
+}
+
+/* Green gradient shimmer at bottom of h1 */
+h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--accent-green) 30%,
+    var(--accent-amber) 70%,
+    transparent
+  );
+  opacity: 0.7;
+}
+
+/* Monospace prefix hint — Linux flavour */
+h1::before {
+  content: '~/';
+  font-family: var(--font-mono);
+  font-size: 0.42em;
+  font-weight: 400;
+  color: var(--accent-green);
+  letter-spacing: 0;
+  vertical-align: middle;
+  margin-inline-end: 0.3em;
+  opacity: 0.85;
+}
+
+/* ---------- H2 — Section Titles ---------- */
+h2 {
+  font-family: var(--font-mono);
+  font-size: clamp(1.05rem, 3vw, 1.35rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-amber);
+  margin-block: var(--space-lg) var(--space-sm);
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+
+  animation: slideUp 0.7s var(--ease-glass) 0.2s both;
+}
+
+/* Left accent bar on h2 — terminal prompt aesthetic */
+h2::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: linear-gradient(to bottom, var(--accent-green), var(--accent-teal));
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+/* Faint line that stretches after the text */
+h2::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-glass), transparent);
+}
+
+/* ---------- Paragraphs ---------- */
+p {
+  font-family: var(--font-body);
+  font-size: 1em;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-block-end: var(--space-md);
+  max-width: 68ch;
+
+  animation: slideUp 0.7s var(--ease-glass) 0.3s both;
+}
+
+/* First paragraph after h1/h2 — slightly brighter */
+h1 + p,
+h2 + p {
+  color: var(--text-primary);
+  font-size: 1.05em;
+}
+
+/* ---------- Shared Slide-Up Animation ---------- */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  background: rgba(143, 188, 106, 0.28);
+  color: var(--text-primary);
+}
+
+/* ---------- Focus (accessibility) ---------- */
+:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* ============================================================
+   RESPONSIVE — Mobile-first adjustments
+   ============================================================ */
+
+/* Small phones */
+@media (max-width: 480px) {
+  body {
+    padding: var(--space-md) var(--space-md);
+  }
+
+  h1 {
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+  }
+
+  h1::before {
+    display: none; /* too cluttered on tiny screens */
+  }
+}
+
+/* Tablets and up — a bit more breathing room */
+@media (min-width: 768px) {
+  body {
+    padding: var(--space-xl) clamp(var(--space-lg), 6vw, var(--space-xl));
+  }
+
+  p {
+    font-size: 1.05em;
+  }
+}
+
+/* Wide screens — cap and center nicely (already handled by max-width + margin:auto) */
+@media (min-width: 1200px) {
+  body {
+    max-width: 920px;
+  }
+}
+
+/* ---------- Reduced Motion (accessibility) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
