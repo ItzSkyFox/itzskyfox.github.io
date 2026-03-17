@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#090c0a">
+  <title>ItzSkyFox</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cursor glow — desktop only, auto-hidden on touch via CSS -->
+  <div id="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Circuit board background — drawn by app.js -->
+  <svg id="bg-svg" aria-hidden="true" focusable="false"></svg>
+
+  <!-- ╔════════════════════════════════════════════════════════╗ -->
+  <!-- ║               DYNAMIC ISLAND                          ║ -->
+  <!-- ║  Edit these data-* attributes to update your info:    ║ -->
+  <!-- ║    data-name       → your display name                ║ -->
+  <!-- ║    data-yt-handle  → your @handle shown on expand     ║ -->
+  <!-- ║    data-yt-url     → full YouTube channel URL         ║ -->
+  <!-- ╚════════════════════════════════════════════════════════╝ -->
+  <div class="island"
+       data-name="ItzSkyFox"
+       data-yt-handle="@ItzSkyFox"
+       data-yt-url="https://youtube.com/@ItzSkyFox"
+       role="banner"
+       tabindex="0"
+       aria-label="ItzSkyFox — YouTube">
+
+    <span class="island-dot"  aria-hidden="true"></span>
+    <span class="island-name"></span><!-- filled by JS -->
+    <span class="island-sep"  aria-hidden="true"></span>
+
+    <a class="island-yt" href="#" target="_blank" rel="noopener noreferrer">
+      <!-- YouTube icon -->
+      <svg class="island-yt-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12
+          3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0
+          12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5
+          9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0
+          24 12a31 31 0 0 0-.5-5.8zM9.7 15.5V8.5l6.3 3.5-6.3 3.5z"/>
+      </svg>
+      <span class="island-yt-handle"></span><!-- filled by JS -->
+    </a>
+  </div>
+
+  <!-- ╔════════════════════════════════════════════════════════╗ -->
+  <!-- ║                   MAIN CONTENT                        ║ -->
+  <!-- ║  Add data-animate to any element for scroll reveal    ║ -->
+  <!-- ╚════════════════════════════════════════════════════════╝ -->
+  <main>
+    <div class="site-border">
+
+      <h1 data-animate>Hello, I'm ItzSkyFox</h1>
+      <p  data-animate>Student, Linux tinkerer, and food startup founder from Kerala. I build things — software, circuits, and occasionally snacks.</p>
+
+      <h2 data-animate>What I'm building</h2>
+      <p  data-animate>Ricing Hyprland via Nix, running a food business on Swiggy Minis, and assembling a 3-axis gimbal on an ESP32. Never a dull afternoon.</p>
+
+      <h2 data-animate>Content</h2>
+      <p  data-animate>Videos on YouTube at @ItzSkyFox — tech, nature, whatever's interesting. No algorithm chasing, just genuine stuff.</p>
+
+      <h2 data-animate>Stack</h2>
+      <p  data-animate>Ubuntu 22.04, Kitty, Obsidian synced via rclone. Arduino IDE for the hardware work. Gruvbox everywhere it fits.</p>
+
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
