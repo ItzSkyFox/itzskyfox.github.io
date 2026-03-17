@@ -1,41 +1,43 @@
-/* ============================================================
-   style.css — VOX × Code · Green Edition
-   Space Grotesk · JetBrains Mono · dashed border · green glow
-   ============================================================ */
+/* ================================================================
+   style.css — ItzSkyFox · VOX × Code · Green Edition
+   Fonts: Space Grotesk + JetBrains Mono
+   ================================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;1,400&display=swap');
 
-/* ---------- Tokens ---------- */
+/* ── Tokens ─────────────────────────────────────────────────────── */
 :root {
   --bg:           #090c0a;
-
   --glow-primary: #4af08a;
-  --glow-mid:     #2dd36f;
-  --glow-dim:     #1a7a45;
   --glow-teal:    #34d399;
   --glow-lime:    #a3e635;
-
-  --text-h1:      #e8f5ee;
+  --text-h1:      #edf5f0;
   --text-h2:      #4af08a;
   --text-body:    #7a9e87;
   --text-lead:    #b8d4c0;
-
-  --border-dash:  rgba(74, 240, 138, 0.35);
+  --text-dim:     #2a3d2e;
+  --border-color: rgba(74,240,138,0.28);
 
   --font-display: 'Space Grotesk', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
+
+  --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth:  cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  --island-top:   16px;
 }
 
-/* ---------- Reset ---------- */
+/* ── Reset ──────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-/* ---------- Scrollbar ---------- */
-::-webkit-scrollbar       { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: #1a2e20; border-radius: 99px; }
+/* ── Scrollbar ──────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 4px; }
+::-webkit-scrollbar-track  { background: var(--bg); }
+::-webkit-scrollbar-thumb  { background: #1a2e20; border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--glow-primary); }
 
-/* ---------- Abstract Glow Background ---------- */
+/* ── Background Glow Orbs ───────────────────────────────────────── */
 body::before {
   content: '';
   position: fixed;
@@ -43,159 +45,258 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 55% 45% at 15% 20%,  rgba(74, 240, 138, 0.10) 0%, transparent 70%),
-    radial-gradient(ellipse 45% 40% at 85% 70%,  rgba(52, 211, 153, 0.08) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 35% at 55% 5%,   rgba(163, 230, 53,  0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 50% at 10% 85%,  rgba(45, 211, 111,  0.07) 0%, transparent 70%);
-  filter: blur(48px);
-  animation: glowDrift 20s ease-in-out infinite alternate;
+    radial-gradient(ellipse 55% 45% at 15% 20%, rgba(74,240,138,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 40% at 85% 70%, rgba(52,211,153,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 55% 5%,  rgba(163,230,53,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 50% at 10% 85%, rgba(74,240,138,0.06) 0%, transparent 70%);
+  filter: blur(52px);
+  animation: glowDrift 22s ease-in-out infinite alternate;
+  will-change: transform, opacity;
 }
 
 @keyframes glowDrift {
-  0%   { transform: translate(0%,   0%);   opacity: 1;    }
-  33%  { transform: translate(2%,  -3%);   opacity: 0.8;  }
+  0%   { transform: translate(0,    0);    opacity: 1;    }
+  33%  { transform: translate(2%,  -3%);   opacity: 0.80; }
   66%  { transform: translate(-3%,  2%);   opacity: 0.95; }
-  100% { transform: translate(1.5%, -1.5%); opacity: 1;   }
+  100% { transform: translate(1.5%, -2%);  opacity: 1;    }
 }
 
-/* Scanline grid overlay */
-body::after {
-  content: '';
+/* ── Circuit Board SVG ──────────────────────────────────────────── */
+#bg-svg {
   position: fixed;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(rgba(74,240,138,0.018) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(74,240,138,0.018) 1px, transparent 1px);
-  background-size: 44px 44px;
-  animation: gridPulse 10s ease-in-out infinite;
 }
 
-@keyframes gridPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.35; }
+/* ── Cursor Glow ────────────────────────────────────────────────── */
+#cursor-glow {
+  position: fixed;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle,
+    rgba(74,240,138,0.07) 0%,
+    rgba(74,240,138,0.025) 45%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  will-change: left, top;
 }
 
-/* ---------- Body ---------- */
+/* ── Body ───────────────────────────────────────────────────────── */
 body {
   font-family: var(--font-display);
-  font-size: clamp(1rem, 2vw, 1.05rem);
+  font-size: 1rem;
   line-height: 1.75;
   color: var(--text-body);
   background: var(--bg);
   min-height: 100dvh;
   position: relative;
-
-  /* Tighter horizontal padding */
-  padding: clamp(1.6rem, 4vw, 2.4rem) clamp(0.9rem, 3vw, 1.6rem);
-  max-width: 800px;
-  margin-inline: auto;
-
-  animation: pageFade 0.7s ease both;
+  overflow-x: hidden;
 }
 
 body > * { position: relative; z-index: 1; }
 
-@keyframes pageFade {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* ── Main layout ────────────────────────────────────────────────── */
+main {
+  padding: 84px clamp(0.8rem, 3vw, 1.4rem) clamp(2rem, 5vh, 3rem);
 }
 
-/* ---------- Dashed Border Wrapper ----------
-   We use a wrapper div with class .site-border in the HTML,
-   OR you can target body directly if it's a single-page layout.
-   Using a pseudo on a wrapper keeps it clean.
-   ------------------------------------------ */
+/* ── Site Border ────────────────────────────────────────────────── */
 .site-border {
-  position: relative;
-  border: 1.5px dashed var(--border-dash);
+  max-width: 760px;
+  margin-inline: auto;
+  border: 1.5px dashed var(--border-color);
   border-radius: 16px;
-  padding: clamp(1.2rem, 3vw, 2rem) clamp(0.9rem, 2.5vw, 1.6rem);
-
-  /* Glow on the border itself */
-  box-shadow:
-    0 0 0 1px rgba(74, 240, 138, 0.04),
-    0 0 24px rgba(74, 240, 138, 0.06),
-    inset 0 0 32px rgba(74, 240, 138, 0.025);
-
-  animation: borderGlow 6s ease-in-out infinite alternate;
+  padding: clamp(1.4rem, 3vw, 2rem) clamp(1rem, 2.5vw, 1.6rem);
+  position: relative;
+  animation: borderGlow 7s ease-in-out infinite alternate;
 }
 
 @keyframes borderGlow {
   from {
-    box-shadow:
-      0 0 0 1px rgba(74, 240, 138, 0.04),
-      0 0 24px rgba(74, 240, 138, 0.06),
-      inset 0 0 32px rgba(74, 240, 138, 0.025);
-    border-color: rgba(74, 240, 138, 0.30);
+    border-color: rgba(74,240,138,0.22);
+    box-shadow: 0 0 18px rgba(74,240,138,0.04), inset 0 0 18px rgba(74,240,138,0.02);
   }
   to {
-    box-shadow:
-      0 0 0 1px rgba(74, 240, 138, 0.06),
-      0 0 40px rgba(74, 240, 138, 0.12),
-      inset 0 0 48px rgba(74, 240, 138, 0.04);
-    border-color: rgba(74, 240, 138, 0.55);
+    border-color: rgba(74,240,138,0.52);
+    box-shadow: 0 0 38px rgba(74,240,138,0.11), inset 0 0 38px rgba(74,240,138,0.04);
   }
 }
 
-/* ---------- H1 ---------- */
+/* ── Dynamic Island ─────────────────────────────────────────────── */
+.island {
+  position: fixed;
+  top: var(--island-top);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  background: rgba(6, 12, 8, 0.90);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid rgba(74,240,138,0.18);
+  border-radius: 99px;
+  padding: 8px 16px;
+
+  max-width: 215px;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: default;
+
+  transition:
+    max-width    0.5s var(--ease-spring),
+    border-color 0.35s ease,
+    box-shadow   0.35s ease,
+    padding      0.4s ease;
+
+  box-shadow: 0 2px 24px rgba(0,0,0,0.5);
+}
+
+.island:hover,
+.island.expanded {
+  max-width: 400px;
+  border-color: rgba(74,240,138,0.45);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.55), 0 0 28px rgba(74,240,138,0.13);
+}
+
+/* Pulsing dot */
+.island-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--glow-primary);
+  box-shadow: 0 0 7px 2px rgba(74,240,138,0.75);
+  flex-shrink: 0;
+  animation: dotPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 7px 2px rgba(74,240,138,0.75); }
+  50%       { box-shadow: 0 0 14px 5px rgba(74,240,138,1.0); }
+}
+
+/* Name */
+.island-name {
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-h1);
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+
+/* Divider */
+.island-sep {
+  width: 1px;
+  height: 14px;
+  background: rgba(74,240,138,0.22);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease 0.15s;
+}
+
+.island:hover .island-sep,
+.island.expanded .island-sep { opacity: 1; }
+
+/* YouTube link — hidden until expanded */
+.island-yt {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--glow-primary);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  transition:
+    max-width 0.48s var(--ease-spring) 0.06s,
+    opacity   0.3s ease 0.14s;
+}
+
+.island:hover .island-yt,
+.island.expanded .island-yt {
+  max-width: 200px;
+  opacity: 1;
+}
+
+.island-yt:hover { color: var(--glow-teal); }
+
+.island-yt-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+}
+
+/* ── Typography ─────────────────────────────────────────────────── */
+
 h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 8vw, 4.2rem);
+  font-size: clamp(2.3rem, 6vw, 3.9rem);
   font-weight: 700;
-  line-height: 1.0;
+  line-height: 1.05;
   letter-spacing: -0.03em;
   color: var(--text-h1);
-  margin-block-end: 0.9rem;
-
-  text-shadow:
-    0 0 40px rgba(74, 240, 138, 0.20),
-    0 0 80px rgba(74, 240, 138, 0.08);
-
-  animation: h1Glow 5s ease-in-out infinite alternate;
-}
-
-@keyframes h1Glow {
-  from {
-    text-shadow:
-      0 0 40px rgba(74, 240, 138, 0.20),
-      0 0 80px rgba(74, 240, 138, 0.08);
-  }
-  to {
-    text-shadow:
-      0 0 60px rgba(74, 240, 138, 0.38),
-      0 0 120px rgba(52, 211, 153, 0.14);
-  }
+  margin-block-end: 0.8rem;
+  cursor: default;
+  transition: text-shadow 0.35s ease;
 }
 
 h1::before {
   content: '// index.main';
   display: block;
   font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 400;
+  font-size: 0.60rem;
   font-style: italic;
-  color: var(--glow-dim);
-  letter-spacing: 0.08em;
-  margin-block-end: 0.45rem;
+  font-weight: 400;
+  color: var(--text-dim);
+  letter-spacing: 0.09em;
+  margin-block-end: 0.4rem;
 }
 
-/* ---------- H2 ---------- */
+h1:hover {
+  text-shadow:
+    0 0 40px rgba(74,240,138,0.38),
+    0 0 90px rgba(74,240,138,0.14);
+}
+
 h2 {
   font-family: var(--font-mono);
-  font-size: clamp(0.72rem, 2vw, 0.82rem);
-  font-weight: 700;
+  font-size: clamp(0.70rem, 1.8vw, 0.80rem);
+  font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--glow-primary);
-  margin-block: 2.2rem 0.55rem;
+  margin-block: 2rem 0.5rem;
 
   display: flex;
   align-items: center;
   gap: 0.6rem;
 
-  text-shadow: 0 0 18px rgba(74, 240, 138, 0.45);
+  text-shadow: 0 0 16px rgba(74,240,138,0.32);
+  transition: text-shadow 0.3s ease, color 0.3s ease;
+  cursor: default;
+}
+
+h2:hover {
+  text-shadow: 0 0 28px rgba(74,240,138,0.70);
+  color: var(--glow-teal);
 }
 
 h2::before {
@@ -204,31 +305,24 @@ h2::before {
   height: 6px;
   border-radius: 50%;
   background: var(--glow-primary);
-  box-shadow: 0 0 8px 2px rgba(74, 240, 138, 0.65);
+  box-shadow: 0 0 8px 2px rgba(74,240,138,0.6);
   flex-shrink: 0;
   animation: dotPulse 2.5s ease-in-out infinite;
-}
-
-@keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 8px 2px rgba(74, 240, 138, 0.65); }
-  50%       { box-shadow: 0 0 16px 5px rgba(74, 240, 138, 0.95); }
 }
 
 h2::after {
   content: '';
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(74,240,138,0.25), transparent);
+  background: linear-gradient(90deg, rgba(74,240,138,0.20), transparent);
 }
 
-/* ---------- Paragraphs ---------- */
 p {
-  font-family: var(--font-display);
   font-size: 1em;
   line-height: 1.8;
   color: var(--text-body);
   margin-block-end: 1rem;
-  max-width: 66ch;
+  max-width: 64ch;
   font-weight: 400;
 }
 
@@ -236,37 +330,122 @@ p:last-child { margin-block-end: 0; }
 
 h1 + p {
   color: var(--text-lead);
-  font-size: 1.07em;
+  font-size: 1.05em;
   font-weight: 500;
 }
 
-/* ---------- Selection ---------- */
-::selection {
-  background: rgba(74, 240, 138, 0.22);
-  color: #e8f5ee;
+/* ── Scroll Animations ──────────────────────────────────────────── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease-smooth), transform 0.6s var(--ease-smooth);
 }
 
-/* ---------- Focus ---------- */
-:focus-visible {
-  outline: 1.5px solid var(--glow-primary);
-  outline-offset: 3px;
-  border-radius: 4px;
+[data-animate].visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* ---------- Reduced Motion ---------- */
+/* ── Click Ripple ───────────────────────────────────────────────── */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(74,240,138,0.22);
+  transform: scale(0);
+  animation: rippleAnim 0.65s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ── Selection & Focus ──────────────────────────────────────────── */
+::selection { background: rgba(74,240,138,0.22); color: #edf5f0; }
+:focus-visible { outline: 1.5px solid var(--glow-primary); outline-offset: 3px; border-radius: 4px; }
+
+/* ── Reduced Motion ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; }
+  *, *::before, *::after { animation: none !important; transition-duration: 0.01ms !important; }
+  [data-animate] { opacity: 1; transform: none; }
+  #cursor-glow { display: none; }
 }
 
-/* ---------- Mobile ---------- */
-@media (max-width: 480px) {
-  h1 { font-size: 2rem; letter-spacing: -0.02em; }
+/* ================================================================
+   DESKTOP — min-width: 769px
+   Full experience: cursor glow, hover states, richer layout
+   ================================================================ */
+@media (min-width: 769px) {
+  main {
+    padding-top: 96px;
+    padding-inline: clamp(1rem, 4vw, 2rem);
+  }
+
+  #cursor-glow { /* JS makes it visible on mousemove */ }
+
+  h1 { font-size: clamp(2.8rem, 5vw, 4rem); }
+
+  .site-border { padding: 2rem 1.8rem; }
+
+  /* Wider island max in expanded on desktop */
+  .island:hover { max-width: 420px; }
+}
+
+/* ================================================================
+   MOBILE — max-width: 768px
+   Touch-first: tap island, larger targets, lighter bg, safe areas
+   ================================================================ */
+@media (max-width: 768px) {
+  :root { --island-top: 12px; }
+
+  /* No cursor glow on touch */
+  #cursor-glow { display: none !important; }
+
+  /* Lighter glow bg for perf */
+  body::before {
+    filter: blur(36px);
+    animation-duration: 30s;
+    opacity: 0.75;
+  }
+
+  /* Circuit board dimmer on mobile */
+  #bg-svg { opacity: 0.4; }
+
+  main {
+    padding-top: 76px;
+    padding-inline: 0.7rem;
+    padding-bottom: 2rem;
+  }
+
+  .site-border {
+    border-radius: 12px;
+    padding: 1.1rem 0.9rem;
+  }
+
+  h1 {
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+    letter-spacing: -0.02em;
+  }
+
   h1::before { display: none; }
-  h2 { font-size: 0.70rem; }
-  .site-border { border-radius: 12px; }
+
+  h2 {
+    font-size: 0.68rem;
+    margin-block-start: 1.5rem;
+  }
+
+  p { font-size: 0.95rem; line-height: 1.75; }
+
+  /* Island tap target */
+  .island { touch-action: manipulation; }
+  .island-dot { width: 8px; height: 8px; }
+  .island-yt { padding-block: 3px; }
 }
 
-/* ---------- Tablet+ ---------- */
-@media (min-width: 768px) {
-  body { padding: 2.5rem 1.6rem; }
+/* iPhone notch / safe area */
+@supports (padding-top: env(safe-area-inset-top)) {
+  @media (max-width: 768px) {
+    :root { --island-top: calc(env(safe-area-inset-top) + 10px); }
+    main  { padding-bottom: calc(env(safe-area-inset-bottom) + 2rem); }
+  }
 }
