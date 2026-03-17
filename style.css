@@ -1,13 +1,15 @@
 body {
-  background: radial-gradient(at top left, #1a1a1a, transparent), radial-gradient(at bottom right, #00ff8822, transparent), #050505;
-  height: 100vh;
+  background: #0a0a0a;
+  background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 0);
+  background-size: 40px 40px;
+  padding: 10px;      
 }
 
 h1{
     font-size: 20px;
-    color: red;
+    color: green;
     background-color: black;
-    text-align: center;
+    text-align: left;
     padding: 10px;
     margin: 10px;
     border: 1px solid black;
