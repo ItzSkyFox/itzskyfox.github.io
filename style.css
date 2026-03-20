@@ -27,7 +27,7 @@ h1{
     font-family: 'Pixelify Sans';
     font-weight: bold;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    padding: 10px;
+    padding: 5px;
 }
 
 h2{
@@ -35,7 +35,7 @@ h2{
     text-align: left;
     font-size: 40px;
     font-family: 'Space Grotesk';
-    font-weight: bold;
+    font-weight: 699;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     padding-left: 30px;
 }
