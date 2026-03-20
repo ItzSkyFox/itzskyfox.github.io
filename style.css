@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Space Grotesk';
+    src: url('SpaceGroteskVRF.woff2') format('woff2');
+    font-weight: 300 700; /* range instead of a single value */
+    /* This part above is AI but i am still learning!*/
+  }
+
+  @font-face {
+    font-family: 'Pixelify Sans';
+    src: url('PixelifySansVRF.woff2') format('woff2');
+    font-weight: 300 700; /* range instead of a single value */
+    /* This part above is AI but i am still learning!*/
+  }
+
+body{
+    background-color: rgb(8, 161, 0);
+    padding: 50px;
+    padding-left: 200px;
+    padding-right: 200px;
+    margin: auto;
+}
+
+h1{
+    color: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 67px;
+    font-family: 'Pixelify Sans';
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+}
+
+h2{
+    color: rgb(255, 255, 255);
+    text-align: left;
+    font-size: 40px;
+    font-family: 'Space Grotesk';
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding-left: 30px;
+}
+
+p{
+    color: rgb(255, 255, 255);
+    font-size: 21px;
+    font-family: Space Grotesk;
+    font-weight: normal;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    padding-left: 10px;
+}
