@@ -15,8 +15,8 @@
 body{
     background: linear-gradient(135deg, #033b00, rgb(38, 181, 38));
     padding: 50px;
-    padding-left: 200px;
-    padding-right: 200px;
+    padding-left: 250px;
+    padding-right: 250px;
     margin: auto;
 }
 
@@ -26,7 +26,7 @@ h1{
     font-size: 67px;
     font-family: 'Pixelify Sans';
     font-weight: bold;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px #0008;
     padding: 5px;
 }
 
@@ -36,7 +36,7 @@ h2{
     font-size: 40px;
     font-family: 'Space Grotesk';
     font-weight: 699;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px #0008;
     padding-left: 30px;
 }
 
@@ -45,6 +45,6 @@ p{
     font-size: 21px;
     font-family: Space Grotesk;
     font-weight: normal;
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    text-shadow: 0 0 8px #0008;
     padding-left: 10px;
 }
