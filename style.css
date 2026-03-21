@@ -13,7 +13,7 @@
   }
 
 body{
-    background: linear-gradient( 135deg, rgb(8, 161, 0), rgb(0, 255, 0));
+    background: linear-gradient(135deg, #033b00, rgb(38, 181, 38));
     padding: 50px;
     padding-left: 200px;
     padding-right: 200px;
