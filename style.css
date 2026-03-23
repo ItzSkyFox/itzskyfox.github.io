@@ -14,10 +14,7 @@
 
 body{
     background: linear-gradient(135deg, #357d32, #1bac1b);
-    padding: 50px;
-    padding-left: 250px;
-    padding-right: 250px;
-    margin: auto;
+    padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 5vw, 6rem);
 }
 
 h1{
@@ -35,7 +32,7 @@ h2{
     text-align: left;
     font-size: 40px;
     font-family: 'Space Grotesk';
-    font-weight: 699;
+    font-weight: bold;
     text-shadow: 0 0 8px #0008;
     padding-left: 30px;
 }
