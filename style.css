@@ -53,6 +53,7 @@ p{
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 1px;
+  border-radius: 50px;
   padding: 13px 20px 13px;
   outline: 0;
   border: 1px solid black;
@@ -66,7 +67,7 @@ p{
 
 .button-52:after {
   content: "";
-  background-color: #55c21f;
+  background-color: #61d627;
   width: 100%;
   z-index: -1;
   position: absolute;
