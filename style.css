@@ -50,8 +50,8 @@ p{
 
 /* CSS */
 .button-52 {
-  font-size: 16px;
-  font-weight: 200;
+  font-size: 18px;
+  font-weight: 400;
   letter-spacing: 1px;
   padding: 13px 20px 13px;
   outline: 0;
@@ -66,11 +66,12 @@ p{
 
 .button-52:after {
   content: "";
-  background-color: #ffe54c;
+  background-color: #55c21f;
   width: 100%;
   z-index: -1;
   position: absolute;
   height: 100%;
+  border-radius: 50px;
   top: 7px;
   left: 7px;
   transition: 0.2s;
